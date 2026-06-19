@@ -1,33 +1,39 @@
 #include <iostream>
 using namespace std;
 
-
-//成员变量和成员函数分开存储
 class Person {
-
-	int m_A;
-
-	static int m_B; // 静态成员变量不占用对象内存
-
-	void func() {
+public:
+	//1.当形参和成员变量同名时，用于区分成员变量和形参，必须在成员变量前加上this指针
+	Person(int age) {
+		//this指针：指向调用成员函数的对象的指针
+		this->age = age;
 	}
+
+	Person PersonAddAge(Person& p) {//应用传递，传递对象的地址，防止对象的拷贝构造函数被调用，造成资源的浪费
+		this->age += p.age;
+		return *this;
+	}
+
+	int age;
+
 };
 
-int Person::m_B = 0; // 静态成员变量需要在类外进行初始化
+
 
 void test01() {
-	Person p;
-
-	cout << sizeof(p) << endl; // 1
+	Person p(20);
+	cout << p.age << endl;
 }
-
 void test02() {
-	Person p;
-	cout<<sizeof(p)<<endl;
+	Person p1(10);
+	Person p2(10);
+	p2.PersonAddAge(p1).PersonAddAge(p1).PersonAddAge(p1);//链式编程，连续调用成员函数
+	cout << p2.age << endl;
+	
 }
 
 
 int main() {
-	test01();
+	test02();
 	return 0;
 }
