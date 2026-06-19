@@ -3,37 +3,29 @@ using namespace std;
 
 class Person {
 public:
-	//1.当形参和成员变量同名时，用于区分成员变量和形参，必须在成员变量前加上this指针
-	Person(int age) {
-		//this指针：指向调用成员函数的对象的指针
-		this->age = age;
+	void showClassName() {
+		cout << "Person Class" << endl;
 	}
 
-	Person PersonAddAge(Person& p) {//应用传递，传递对象的地址，防止对象的拷贝构造函数被调用，造成资源的浪费
-		this->age += p.age;
-		return *this;
+	void showPersonAge() {
+		cout << m_Age << endl;
 	}
 
-	int age;
-
+	int m_Age;
 };
 
 
 
 void test01() {
-	Person p(20);
-	cout << p.age << endl;
-}
-void test02() {
-	Person p1(10);
-	Person p2(10);
-	p2.PersonAddAge(p1).PersonAddAge(p1).PersonAddAge(p1);//链式编程，连续调用成员函数
-	cout << p2.age << endl;
-	
+	Person* p=NULL;
+
+	p->showClassName(); // 通过空指针访问成员函数是允许的, 因为成员函数并不访问成员属性
+	//p->showPersonAge(); // 通过空指针访问成员属性是非法的, 因为成员函数访问成员属性时需要this指针, 而this指针指向对象本身, 但是p是一个空指针, 没有指向任何对象, 所以会导致程序崩溃
+
 }
 
 
 int main() {
-	test02();
+	test01();
 	return 0;
 }
