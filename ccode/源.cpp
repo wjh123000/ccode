@@ -1,29 +1,164 @@
 #include <iostream>
 using namespace std;
+#include <string>
 
-class Person {
+//全局函数做友元
+/*
+class Building {
+	//goodGay是Building的好朋友，可以访问Building中的私有成员
+	friend void goodGay(Building* building);
 public:
-	void showClassName() {
-		cout << "Person Class" << endl;
+	Building() {
+		m_SittingRoom = "客厅";
+		m_BedRoom = "卧室";
 	}
+	
 
-	void showPersonAge() {
-		cout << m_Age << endl;
-	}
+public:
+	string m_SittingRoom;
 
-	int m_Age;
+private:
+
+	string m_BedRoom;
+
 };
+
+void goodGay(Building* building) {
+	cout << building->m_SittingRoom << endl;
+	cout << building->m_BedRoom << endl;
+}
+
+void test01() {
+	Building building;
+	goodGay(&building);
+
+}
+
+
+void test02() {
+	
+}
+
+int main() {
+	test01();
+	test02();
+	return 0;
+}
+*/
+
+
+
+
+
+//类做友元
+
+/*
+class Building;
+
+class GoodGay {
+public:
+	void visit();
+	GoodGay();
+	Building* building;
+};
+
+class Building {
+	//goodGay是Building的好朋友，可以访问Building中的私有成员
+	friend class GoodGay;
+
+public:
+	Building();
+public:
+	string m_SittingRoom;
+
+private:
+	string m_BedRoom;
+
+};
+
+Building::Building() {
+	m_SittingRoom = "Sitting Room";
+	m_BedRoom = "Bedroom";
+
+}
+
+GoodGay::GoodGay() {
+	building = new Building;
+}
+
+void GoodGay::visit() {
+	cout << building->m_SittingRoom << endl;
+	cout << building->m_BedRoom << endl;
+}
+
+void test01() {
+	GoodGay gg;
+	gg.visit();
+
+}
+
+
+int main() {
+	test01();
+
+	return 0;
+}
+*/
+
+
+
+
+//成员函数做友元
+class Building;
+class GoodGay {
+public:
+
+	GoodGay();
+
+	void visit();
+
+	Building* building;
+
+};
+
+class Building {
+public:
+	friend void GoodGay::visit();
+	
+	Building();
+
+
+
+
+public:
+
+	string m_SittingRoom;
+
+private:
+	string m_BedRoom;
+};
+
+
+GoodGay::GoodGay() {
+	building = new Building;
+}
+
+Building::Building() {
+	m_SittingRoom = "Sitting Room";
+	m_BedRoom = "Bed Room";
+}
+
+void GoodGay::visit() {
+	cout << building->m_SittingRoom << endl;
+	cout << building->m_BedRoom << endl;
+}
 
 
 
 void test01() {
-	Person* p=NULL;
-
-	p->showClassName(); // 通过空指针访问成员函数是允许的, 因为成员函数并不访问成员属性
-	//p->showPersonAge(); // 通过空指针访问成员属性是非法的, 因为成员函数访问成员属性时需要this指针, 而this指针指向对象本身, 但是p是一个空指针, 没有指向任何对象, 所以会导致程序崩溃
-
+	GoodGay gg;
+	gg.visit();
 }
-
 
 int main() {
 	test01();
