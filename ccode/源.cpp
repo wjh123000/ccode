@@ -2,47 +2,137 @@
 using namespace std;
 #include <string>
 
-//è¿ç®—ç¬¦é‡è½½
-//åŠ å·
+//¼Ì³Ğ
+
+//class Java {
+//public:
+//
+//	void header() {
+//		cout << "Java header" << endl;
+//	}
+//
+//	void footer() {
+//		cout << "Java footer" << endl;
+//	}
+//
+//	void left() {
+//		cout << "Java left" << endl;
+//	}
+//
+//	void content() {
+//		cout << "Java content" << endl;
+//	}
+//
+//
+//};
+//
+//
+//class Python {
+//public:
+//
+//	void header() {
+//		cout << "Python header" << endl;
+//	}
+//
+//	void footer() {
+//		cout << "Python footer" << endl;
+//	}
+//
+//	void left() {
+//		cout << "Python left" << endl;
+//	}
+//
+//	void content() {
+//		cout << "Python content" << endl;
+//	}
+//
+//
+//};
+//
+//class Cpp {
+//public:
+//
+//	void header() {
+//		cout << "c++ header" << endl;
+//	}
+//
+//	void footer() {
+//		cout << "c++ footer" << endl;
+//	}
+//
+//	void left() {
+//		cout << "c++ left" << endl;
+//	}
+//
+//	void content() {
+//		cout << "c++ content" << endl;
+//	}
+//
+//
+//};
+
 
 /*
-class Person {
+class BasePage {
 public:
+	void header() {
+		cout << "header" << endl;
+	}
 
-	//Person operator+ (Person& p) {
-	//	Person temp;
-	//	temp.m_A = this->m_A + p.m_A;
-	//	temp.m_B = this->m_B + p.m_B;
-	//	return temp;
-	//}
+	void footer() {
+		cout << "footer" << endl;
+	}
+
+	void left() {
+		cout << "left" << endl;
+	}
 
 
+};
+//¼Ì³Ğ,¼õÉÙ´úÂëÈßÓà
+//Óï·¨£ºclass ×ÓÀà : ¼Ì³Ğ·½Ê½ ¸¸Àà
+//×ÓÀàÒ²³ÆÎªÅÉÉúÀà£¬¸¸ÀàÒ²³ÆÎª»ùÀà
+
+class Java : public BasePage {
 public:
-	int m_A;
-	int m_B;
+	void content() {
+		cout << "Java content" << endl;
+	}
+};
+
+class Python : public BasePage {
+public:
+	void content() {
+		cout << "Python content" << endl;
+	}
+};
+
+class Cpp : public BasePage {
+public:
+	void content() {
+		cout << "c++ content" << endl;
+	}
 };
 
 
-Person operator+ (Person& p1, Person& p2) {
-	Person temp;
-	temp.m_A = p1.m_A + p2.m_A;
-	temp.m_B = p1.m_B + p2.m_B;
-	return temp;
-}
-
-
 void test01() {
-	Person p1;
-	p1.m_A = 10;
-	p1.m_B = 10;
-	Person p2;
-	p2.m_A = 10;
-	p2.m_B = 10;
-	Person p3 = p1 + p2;
-
-	cout << p3.m_A << endl;
-	cout << p3.m_B << endl;
+	Java ja;
+	ja.header();
+	ja.footer();
+	ja.left();
+	ja.content();
+	Python py;
+	py.header();
+	py.footer();
+	py.left();
+	py.content();
+	Cpp cp;
+	cp.header();
+	cp.footer();
+	cp.left();
+	cp.content();
 }
+
 
 int main() {
 	test01();
@@ -52,49 +142,49 @@ int main() {
 */
 
 
-//é‡è½½<<è¿ç®—ç¬¦
-//ä¾¿äºè¾“å‡º
 
 /*
-class Person{
+class Base {
 public:
-	friend ostream& operator<<(ostream& cout, Person& p);
-	friend void test01();
-	//void operator<<(Person& p) {
-
-	//}
-
-
-private:
-	int m_A;
-	int m_B;
+	static int m_A;
+	static void func() {
+		cout << "Base func" << endl;
+	}
 
 };
-
-//æ— æ³•è¿›è¡Œé“¾å¼è¾“å‡º
-//void operator<<(ostream& cout, Person& p) {
-//	cout << p.m_A << " " << p.m_B;
-//}
-
-ostream& operator<<(ostream& cout, Person& p) {
-	cout << p.m_A << " " << p.m_B;
-	return cout;
-}
-
+int Base::m_A = 100;
+class Son : public Base {
+public:
+	static int m_A;
+	static void func() {
+		cout << "Son func" << endl;
+	}
+};
+int Son::m_A = 200;
 
 void test01() {
-	Person p;
-	p.m_A = 10;
-	p.m_B = 10;
-	cout << p<<endl;
+	Son s;
+	cout << s.m_A << endl;//200
+	cout << s.Base::m_A << endl;//100
 
+	cout << Son::Base::m_A << endl;//100
+	cout << Son::m_A << endl;//200
+}
+
+void test02() {
+	Son s;
+	s.func();//Son func
+	s.Base::func();//Base func
+
+
+	Son::func();
+	Son::Base::func();
 }
 
 
 int main() {
-	test01();
-
-
+	//test01();
+	test02();
 	return 0;
 }
 
@@ -103,170 +193,39 @@ int main() {
 
 
 
-//é€’å¢è¿ç®—ç¬¦é‡è½½
-
-/*
-class MyInteger {
-	friend ostream& operator<<(ostream& cout, const MyInteger& myint);
+//ÁâĞÎ¼Ì³Ğ
+class Animal {
 public:
-	MyInteger() {
-		m_num = 0;
-	}
-
-	//é‡è½½++
-	//å‰ç½®++
-	MyInteger& operator++() {
-		m_num++;
-		return *this;
-	}
-
-	//åç½®++
-	MyInteger operator++(int) {
-		MyInteger temp = *this;//ä¿å­˜å½“å‰å¯¹è±¡çš„å€¼
-		m_num++;//å½“å‰å¯¹è±¡çš„å€¼åŠ 1
-		return temp;//è¿”å›ä¿å­˜çš„å€¼
-	}
-
-private:
-	int m_num;
-};
-
-ostream& operator<<(ostream& cout,const MyInteger& myint) {
-	cout << myint.m_num;
-	return cout;
-}
-
-
-void test01() {
-	MyInteger myint;
-	cout << ++(++myint) << endl;
-	cout << myint << endl;
-	cout << myint++ << endl;
-	cout << myint << endl;
-}
-
-int main() {
-	test01();
-
-	return 0;
-}
-*/
-
-
-
-//èµ‹å€¼è¿ç®—ç¬¦é‡è½½
-
-/*
-class Person {
-public:
-	Person(int age) {
-		m_age = new int(age);
-	}
-
-	~Person() {
-		if (m_age != nullptr) {
-			delete m_age;
-		}
-		m_age = nullptr;
-	}
-
-	//é‡è½½èµ‹å€¼è¿ç®—ç¬¦
-	Person& operator=(Person& p) {
-		//å…ˆåˆ¤æ–­æ˜¯å¦æœ‰å¹´é¾„ï¼Œå¦‚æœæœ‰ï¼Œå…ˆé‡Šæ”¾æ‰
-		if (m_age != nullptr) {
-			delete m_age;
-		}
-		m_age = nullptr;//é˜²æ­¢é‡æŒ‡é’ˆ
-		m_age = new int(*p.m_age);//æ·±æ‹·è´
-		return *this;
-	}
-
-	int* m_age;
-};
-
-
-
-
-
-void test01() {
-	Person p1(18);
-	Person p2(20);
-	cout << *p1.m_age << endl;
-	cout << *p2.m_age << endl;
-	p2 = p1;
-	cout << *p2.m_age << endl;
-	Person p3(30);
-	p3 = p2 = p1;
-	cout << *p3.m_age << endl;
-}
-
-int main() {
-	test01();
-
-	//int a = 10;
-	//int b = 20;
-	//int c = 30;
-	//c = b = a;
-	//cout << a << ' ' << b << ' ' << c << endl;
-	return 0;
-}
-
-*/
-
-
-//é‡è½½å…³ç³»è¿ç®—ç¬¦
-
-/*
-class Person {
-public:
-	Person(string name, int age) {
-		m_Name = name;
-		m_Age = age;
-	}
-
-	//é‡è½½==è¿ç®—ç¬¦
-	bool operator==(const Person& p) {
-		if (this->m_Name == p.m_Name && this->m_Age == p.m_Age) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	bool operator!=(const Person& p) {
-		if (this->m_Name != p.m_Name || this->m_Age != p.m_Age) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-
-public:
-	string m_Name;
 	int m_Age;
 };
 
+//ÀûÓÃĞé¼Ì³Ğ½â¾öÁâĞÎ¼Ì³ĞÎÊÌâ
+class Sheep : virtual public Animal {
+
+};
+
+
+class Tuo : virtual public Animal {
+
+};
+
+
+class SheepTuo : public Sheep, public Tuo {
+
+};
+
+
 
 void test01() {
-	Person p1("Tom", 18);
-	Person p2("Tom", 19);
+	SheepTuo st;
+	//st.m_Age = 18;//´íÎó£¬±àÒëÆ÷ÎŞ·¨È·¶¨·ÃÎÊÄÄ¸ö¸¸ÀàÖĞµÄm_Age
+	st.Sheep::m_Age = 18;
+	st.Tuo::m_Age = 20;
+	cout << st.Sheep::m_Age << endl;//18
+	cout << st.Tuo::m_Age << endl;//20
 
-	if (p1 == p2) {
-		cout << "p1==p2" << endl;
-	}
-	else {
-		cout << "p1!=p2" << endl;
-	}
+	//Õâ·İÊı¾İÖ»ÒªÓĞÒ»·İ¾Í¹»ÁË£¬ÀË·ÑÄÚ´æ¿Õ¼ä
 
-	if (p1 != p2) {
-		cout << "p1!=p2" << endl;
-	}
-	else {
-		cout << "p1==p2" << endl;
-	}
 }
 
 
@@ -275,54 +234,4 @@ int main() {
 
 	return 0;
 }
-*/
 
-
-//å‡½æ•°è°ƒç”¨è¿ç®—ç¬¦é‡è½½
-//ä»¿å‡½æ•°
-
-
-class MyPrint {
-public:
-
-	void operator()(string text) {
-		cout << text << endl;
-	}
-
-};
-
-
-void MyPrint02(string text) {
-	cout << text << endl;
-}
-
-
-
-
-void test01() {
-	MyPrint myprint;
-	myprint("Hello World");//ä½¿ç”¨èµ·æ¥éå¸¸ç±»ä¼¼å‡½æ•°è°ƒç”¨
-	MyPrint02("Hello World");
-}
-
-//åŠ æ³•ç±»
-
-class MyAdd {
-public:
-	int operator()(int num1, int num2) {
-		return num1 + num2;
-	}
-};
-
-void test02() {
-	MyAdd myadd;
-	int result = myadd(10, 20);
-	cout << "result=" << result << endl;
-}
-
-int main() {
-	test01();
-	test02();
-
-	return 0;
-}
